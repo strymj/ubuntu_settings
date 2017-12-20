@@ -1,0 +1,28 @@
+# external bash settings
+
+if [ -e ~/ubuntu_settings/scripts/ ]; then
+	PATH="{$PATH}:~/ubuntu_settings/scripts/"
+fi
+
+if [ -f ~/ubuntu_settings/bash/my_aliases ]; then
+    . ~/ubuntu_settings/bash/my_aliases
+fi
+
+# history setting
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTTIMEFORMAT='%Y/%m/%d %H:%M:%S '
+
+
+# for ROS setting
+source /opt/ros/kinetic/setup.bash
+
+# for tesseract setting
+export TESSDATA_PREFIX=/home/strymj/tessdata/
+
+# for deep learning
+# export PYENV_ROOT=$HOME/.pyenv
+# export PATH=$PYENV_ROOT/bin:$PATH
+# eval "$(pyenv init -)"
+# export PATH="$PATH:$PYENV_ROOT/versions/anaconda3-4.4.0/bin"
+

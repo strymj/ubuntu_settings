@@ -1,0 +1,72 @@
+body {
+  background: #FFFFFF;
+  font-size:medium;
+  margin: 0px;
+  padding: 0px;
+}
+table {
+ border-radius: 16px;
+  margin: 8px;
+  background: #FFFFFF;
+}
+td {
+  vertical-align: top;
+}
+.folder {
+  margin: 10px 18px;
+  padding: 0px 0px 15px;
+}
+.folder h2 {
+ border-radius: 12px 0px 12px;
+  margin:0px;
+  padding:4px 2px;
+  font-size: 90%;
+  background: #00CCCC;
+  color: #044;
+  text-align: center;
+}
+ul {
+  margin: 1.5em 8px;
+  padding: 0 0 0 18px;
+  list-style: square;
+  line-height: 133%;
+  font-size: 90%;
+}
+li {
+  margin-bottom: 3px;
+}
+li.defnode {
+  margin-left: 3px;
+}
+li.favnode {
+  list-style: none;
+  text-indent:-16px;
+}
+li a {
+  text-decoration: none;
+  display: block;
+  color: #000000;
+  border-bottom: 2px solid transparent;
+}
+li a:visited {
+  color: #000000;
+}
+li a:hover {
+  border-bottom: 2px dotted #7FFFB1;
+}
+.folder h2 a {
+  color: #044;
+}
+.folder h2 a:hover {
+  text-decoration: none;
+  color: #808;
+  font-weight: bold;
+}
+img.favicon {
+  border-color: #990;
+  border-width: 0 2px 2px 0;
+  margin-right:3px;
+  max-height:16px;
+  max-width:16px;
+  vertical-align:middle;
+}

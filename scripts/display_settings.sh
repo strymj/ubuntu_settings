@@ -5,7 +5,7 @@ brightness=$(xrandr --verbose | grep -m 1 rightness | awk '{ print $2 }')
 brightness_max=1.0
 brightness_min=0.1
 brightness_step=0.1    
-brightness_mine=0.4
+brightness_mine=0.3
 
 redshift_on=5000
 redshift_off=6500

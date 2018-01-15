@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 _help ()
 {
@@ -8,24 +8,24 @@ _help ()
 	echo "-h   Show this help message."
 }
 
-password=""
 timeout=10
 command=""
+password="Strymj_7290"
 
-while getopts "c:t:h" OPT; do
-	case ${OPT} in
-		c) command=${OPTARG};;
+while getopts "c:p:t:h" OPT; do case ${OPT} in
 		t) timeout=${OPTARG};;
+		c) command=${OPTARG};;
 		t) _help && exit 0;;
 	esac
 done
 
 expect -c "
-set timeout ${timeout}
-spawn sudo ${command}
-expect \"sudo\"
-send \"${password}\n\"
+	set timeout ${timeout}
+	spawn ${command}
+	expect \"sudo\"
+	send \"${password}\n\"
+	expect \"$\"
+	exit 0
 "
-echo "\n"
 
 exit 0

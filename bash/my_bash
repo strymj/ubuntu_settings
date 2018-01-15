@@ -1,5 +1,10 @@
 # external bash settings
 
+# you have to write these 3 lines below into .bashrc
+# if [ -f ~/ubuntu_settings/bash/my_bash ]; then
+#     . ~/ubuntu_settings/bash/my_bash
+# fi
+
 if [ -e ~/ubuntu_settings/scripts/ ]; then
 	PATH="{$PATH}:~/ubuntu_settings/scripts/"
 fi
@@ -16,6 +21,9 @@ HISTTIMEFORMAT='%Y/%m/%d %H:%M:%S '
 
 # for ROS setting
 source /opt/ros/kinetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+export ROS_WORKSPACE=~/catkin_ws
+export ROS_PACKAGE_PATH=~/catkin_ws:$ROS_PACKAGE_PATH
 
 # for tesseract setting
 export TESSDATA_PREFIX=/home/strymj/tessdata/

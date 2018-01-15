@@ -7,7 +7,7 @@ hdmiStatus=$(xrandr | grep ${hdmi} | awk '{ print $2 }')
 
 _help ()
 {
-	echo "Usage: sh redshift_brightness.sh [options] [args]"
+	echo "Usage: sh display_scaling.sh [options] [args]"
 	echo "-h   Show this help message."
 	echo "-s <scaling ratio>"
 }

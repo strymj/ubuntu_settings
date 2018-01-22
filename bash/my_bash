@@ -6,7 +6,7 @@
 # fi
 
 if [ -e ~/ubuntu_settings/scripts/ ]; then
-	PATH="{$PATH}:~/ubuntu_settings/scripts/"
+	PATH="${PATH}:~/ubuntu_settings/scripts/"
 fi
 
 if [ -f ~/ubuntu_settings/bash/my_aliases ]; then
@@ -23,7 +23,7 @@ HISTTIMEFORMAT='%Y/%m/%d %H:%M:%S '
 source /opt/ros/kinetic/setup.bash
 source ~/catkin_ws/devel/setup.bash
 export ROS_WORKSPACE=~/catkin_ws
-export ROS_PACKAGE_PATH=~/catkin_ws:$ROS_PACKAGE_PATH
+export ROS_PACKAGE_PATH=~/catkin_ws:${ROS_PACKAGE_PATH}
 
 # for tesseract setting
 export TESSDATA_PREFIX=/home/strymj/tessdata/

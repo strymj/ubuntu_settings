@@ -8,7 +8,7 @@ restarter_sh="${HOME}/ubuntu_settings/argos/mining/wifi_restarter.sh"
 ps_util_sh="${HOME}/ubuntu_settings/argos/mining/ps_util.sh"
 log_file="${HOME}/.mining.log"
 old_log_file="${HOME}/.mining_old.log"
-nline_log=50
+nline_log=100
 minerd_status=$(${ps_util_sh} -c minerd)
 restarter_status=$(${ps_util_sh} -c wifi_restarter)
 
@@ -18,6 +18,7 @@ pict_warn="⚠"
 pict_pic="🔨"
 pict_log="📘"
 pict_wifi="🔁"
+pict_sleep="💤"
 
 thumbnail="init"
 

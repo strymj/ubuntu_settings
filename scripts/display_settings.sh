@@ -27,7 +27,7 @@ _help ()
 	echo "-r <redshift arg>"
 	echo "     on      --- Turn redshift on."
 	echo "     off     --- Turn redshift off."
-	echo "     switch  --- Switch redshift on and off."
+	echo "     toggle  --- Switch redshift on and off."
 	echo "-b <brightness arg>"
 	echo "     [value] --- Set brightness(0.1 ~ 1.0)."
 	echo "     inc, +  --- Increment brightness by ${brightness_step}."
@@ -53,8 +53,8 @@ redshift_fcn ()
 		"off")
 			echo "[Redshift off]"
 			redshift=${redshift_off};;
-		"switch")
-			echo "[Redshift switch]"
+		"toggle")
+			echo "[Redshift toggle]"
 			if [ ${redshift} -eq ${redshift_on} ]; then
 				redshift=${redshift_off}
 			else

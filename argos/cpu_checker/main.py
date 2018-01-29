@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import unicodedata
 import subprocess
 import re
 

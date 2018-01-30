@@ -33,4 +33,3 @@ export TESSDATA_PREFIX=/home/strymj/tessdata/
 # export PATH=$PYENV_ROOT/bin:$PATH
 # eval "$(pyenv init -)"
 # export PATH="$PATH:$PYENV_ROOT/versions/anaconda3-4.4.0/bin"
-

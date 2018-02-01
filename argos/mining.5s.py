@@ -14,7 +14,7 @@ if minerd_pid == "" :
     color = "#fff"
     status_output = "Sleeping |"
     # switch_output = ":runner:   - Start Mining | bash=rm\ -rf\ " +logfile +"\ &&\ " +minerd +"\ -a\ yescrypt\ -o\ stratum+tcp://bitzenypool.work:19666\ -u\ freesky.freesky\ -p\ 9j260a95yten9eh\ 2>\ " +logfile
-    switch_output = ":runner:   - Start Mining | bash=" +minerd +"\ -a\ yescrypt\ -o\ stratum+tcp://bitzenypool.work:19666\ -u\ freesky.freesky\ -p\ 9j260a95yten9eh\ 2>\ " +logfile
+    switch_output = ":runner:   - Start Mining | bash=" +minerd +"\ -a\ yescrypt\ -o\ stratum+tcp://bitzenypool.work:19666\ -u\ freesky.freesky\ -p\ 9j260a95yten9eh\ -t\ 4\ 2>\ " +logfile
 else :
     switch_output = ":zzz:   - Stop Mining | bash=kill\ " +minerd_pid
     if os.path.exists(logfile) :

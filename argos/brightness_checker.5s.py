@@ -5,7 +5,7 @@ import re
 
 brightness_step = 0.1
 gamma_default = "1.0:1.0:1.0"
-gamma_target = "1.0:0.85:0.8"
+gamma_target = "1.0:0.85:0.75"
 
 xrandr_cmd = "xrandr --verbose"
 xrandr_result = subprocess.check_output(xrandr_cmd, shell=True).split("\n")

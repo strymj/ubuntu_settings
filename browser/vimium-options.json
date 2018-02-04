@@ -1,0 +1,21 @@
+{
+  "settingsVersion": "1.62.4",
+  "exclusionRules": [],
+  "filterLinkHints": false,
+  "waitForEnterForFilteredHints": true,
+  "hideHud": false,
+  "keyMappings": "map H goBack\nmap L goForward\nmap <C-h> previousTab\nmap <C-l> nextTab\nmap f LinkHints.activateMode\nmap F LinkHints.activateModeToOpenInNewTab\nmap d removeTab\nmap <C-u> scrollPageUp\nmap <C-d> scrollPage\nmap <Space>h moveTabLeft\nmap <Space>l moveTabRight\nmap u restoreTab",
+  "linkHintCharacters": "jfhgkdlsurytieowmvnbcxapqz",
+  "linkHintNumbers": "0123456789",
+  "newTabUrl": "file:///home/strymj/Documents/mybookmarks.html",
+  "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
+  "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+  "regexFindMode": false,
+  "ignoreKeyboardLayout": false,
+  "scrollStepSize": 120,
+  "smoothScroll": true,
+  "grabBackFocus": false,
+  "searchEngines": "",
+  "searchUrl": "https://www.google.com/search?q=",
+  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n  /* Link hint boxes */\n  background: #5294e2;\n  border: none;\n  border-radius: 0px;\n  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.4);\n}\n\ndiv > .vimiumHintMarker span {\n  /* Link hint text */\n  //text-transform: lowercase;\n  font: Ubuntu\\ Mono;\n  font-size: 12px;\n  color: #ffffff;\n  text-shadow: none;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n  /* Link hint matching characters */\n  color: #cccccc;\n}"
+}

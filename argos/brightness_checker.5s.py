@@ -33,4 +33,4 @@ print "---"
 print ":computer:     RedShift", rs_status, "|", conf, font, "bash=redshift\ -O\ " +target_temp +"\ -b\ " +now_brightness
 print "---"
 print ":repeat:     Restore Default |", conf, font, "bash=redshift\ -O\ 6500\ -b\ 1.0"
-print ":bust_in_silhouette:     My Setting |", conf, font, "bash=redshift\ -O\ 5000\ -b\ 0.5"
+print ":bust_in_silhouette:     My Setting |", conf, font, "bash=redshift\ -O\ 5000\ -b\ 0.4"

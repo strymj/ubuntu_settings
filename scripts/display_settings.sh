@@ -5,7 +5,7 @@ brightness=$(xrandr --verbose | grep -m 1 rightness | awk '{ print $2 }')
 brightness_max=1.0
 brightness_min=0.1
 brightness_step=0.1    
-brightness_mine=0.3
+brightness_mine=0.5
 
 redshift_on=5000
 redshift_off=6500
@@ -124,6 +124,6 @@ while getopts "b:r:dmhv" OPT; do
 	esac
 done
 
-redshift -O ${redshift} -b ${brightness}:${brightness}
+redshift -O ${redshift} -b ${brightness}
 
 exit

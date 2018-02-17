@@ -1,33 +1,110 @@
 #!/usr/bin/python
 
+"""Process some integers.
+
+usage: main.py [-r|--redshift <on_off_toggle>] [-b|--brightness <value>] [-d|--default]
+
+options:
+    -h --help                 show this help message and exit
+    -b --brightness <value>   set brightness (0.1 ~ 1.0, "inc" or "dec")
+    -r --redshift <on_off_toggle>    redshift ("on" , "off" or "toggle")
+    -d --default              restore default value (brightness : 1.0, redshift : off)
+"""
+
 import subprocess
 import re
+import sys
+from docopt import docopt
 
-brightness_step = 0.1
+bright_step = 0.1
 gamma_default = "1.0:1.0:1.0"
+gamma_target = "1.2:0.8:0.6"
 
-conf1 = "terminal=false refresh=true"
-conf2 = "font=Ubuntu\ Mono trim=false"
+xrandr_cmd = "xrandr --verbose"
+xrandr_result = subprocess.check_output(xrandr_cmd, shell=True).split("\n")
 
-bright_cmd = "xrandr --verbose | grep -m 1 rightness | awk '{ print $2 }'"
-gamma_cmd = "xrandr --verbose | grep -m 1 amma | awk '{ print $2}'"
+conf = "terminal=false refresh=true"
+font = "font=Ubuntu\ Mono trim=false"
 
-now_brightness = subprocess.check_output(bright_cmd, shell=True)
-now_gamma = subprocess.check_output(gamma_cmd, shell=True).strip()
+disp_list = []
+bright_list = []
+gamma_list = []
+for i in range(len(xrandr_result)) :
+    split_result = xrandr_result[i].split()
+    if 2 <= len(split_result) and split_result[1] == "connected" :
+        disp_list.append(split_result[0])
+    if 2 <= len(split_result) and split_result[0] == "Brightness:" :
+        bright_list.append(split_result[1])
+    if 2 <= len(split_result) and split_result[0] == "Gamma:" :
+        gamma_list.append(split_result[1])
 
-if now_gamma == gamma_default:
-    now_temp = "6500"
-    target_temp = "5000"
-    rs_status = "off"
-else:
-    now_temp = "5000"
-    target_temp = "6500"
-    rs_status = "on"
+XRANDR = "bash=xrandr\ --output\ "
+BRIGHT = "\ --brightness\ "
+GAMMA = "\ --gamma\ "
 
-print ":bulb:" 
-print "---"
-print ":bulb:     Brightness ", float(now_brightness), "|" , conf2
-print "   + up   |", conf1, conf2, "bash=redshift\ -O\ " +now_temp +"\ -b\ " +str(float(now_brightness)+brightness_step)
-print "   + down |", conf1, conf2, "bash=redshift\ -O\ " +now_temp +"\ -b\ " +str(float(now_brightness)-brightness_step)
-print "---"
-print ":computer:     RedShift", rs_status, "|", conf1, conf2, "bash=redshift\ -O\ " +target_temp +"\ -b\ " +now_brightness
+def getGamma(is_redshift):
+    if is_redshift :
+        return gamma_target
+    else :
+        return gamma_default
+
+def getStatus(is_redshift) :
+    if is_redshift :
+        return "On"
+    else :
+        return "Off"
+
+
+# with no args
+if len(sys.argv) == 1 :
+    print ":bulb:" 
+    for i in range(len(disp_list)) :
+        if gamma_list[i] == gamma_default :
+            rs = False
+        else :
+            rs = True
+        disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
+
+        print "---"
+        print  disp_status, "|", conf, font, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
+        print ":arrow_forward:   Brightness up   |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])+bright_step) +GAMMA +getGamma(rs)
+        print ":arrow_forward:   Brightness down |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])-bright_step) +GAMMA +getGamma(rs)
+        print ":arrow_forward:   RedShift", getStatus(not rs), "|", conf, font, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
+
+
+else :
+    bright_value = float(bright_list[0]);
+    gamma_str = getGamma(gamma_list[0] != gamma_default);
+
+    args = docopt(__doc__)
+
+    arg = args.get('--brightness')
+    if len(arg) :
+        if arg[0] == "inc" :
+            bright_value += bright_step
+        elif arg[0] == "dec" :
+            bright_value -= bright_step
+        else :
+            bright_value = float(arg[0])
+
+        if bright_value < 0.1 :
+            bright_value = 0.1
+        if 1.0 < bright_value :
+            bright_value = 1.0
+
+    arg = args.get('--redshift')
+    if len(arg) :
+        if arg[0] == "on" :
+            gamma_str = gamma_target
+        elif arg[0] == "off" :
+            gamma_str = gamma_default
+        elif arg[0] == "toggle" :
+            gamma_str = getGamma(gamma_list[0] == gamma_default)
+
+    if args.get('--default') :
+        bright_value = 1.0
+        gamma_str = gamma_default
+
+    cmd = "xrandr --output " + disp_list[0] + " --brightness " + str(bright_value) + " --gamma " + gamma_str
+    # print cmd
+    subprocess.check_output(cmd, shell=True)

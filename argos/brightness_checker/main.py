@@ -18,7 +18,7 @@ from docopt import docopt
 
 bright_step = 0.1
 gamma_default = "1.0:1.0:1.0"
-gamma_target = "1.2:0.8:0.6"
+gamma_target = "1.4:0.8:0.6"
 
 xrandr_cmd = "xrandr --verbose"
 xrandr_result = subprocess.check_output(xrandr_cmd, shell=True).split("\n")
@@ -42,6 +42,8 @@ XRANDR = "bash=xrandr\ --output\ "
 BRIGHT = "\ --brightness\ "
 GAMMA = "\ --gamma\ "
 
+rs = False
+
 def getGamma(is_redshift):
     if is_redshift :
         return gamma_target
@@ -57,12 +59,18 @@ def getStatus(is_redshift) :
 
 # with no args
 if len(sys.argv) == 1 :
-    print ":bulb:" 
+
+    if gamma_list[0] != gamma_default :
+        print ":bulb: | color=#f80"
+    else :
+        print ":bulb:"
+
     for i in range(len(disp_list)) :
-        if gamma_list[i] == gamma_default :
-            rs = False
-        else :
+
+        rs = False
+        if gamma_list[i] != gamma_default :
             rs = True
+
         disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
 
         print "---"

@@ -18,7 +18,9 @@ from docopt import docopt
 
 bright_step = 0.1
 gamma_default = "1.0:1.0:1.0"
-gamma_target = "1.4:0.8:0.6"
+gamma_target = "1.0:0.8:0.6"
+n_shadow = 5
+shadow_step = 0.2
 
 xrandr_cmd = "xrandr --verbose"
 xrandr_result = subprocess.check_output(xrandr_cmd, shell=True).split("\n")
@@ -74,10 +76,16 @@ if len(sys.argv) == 1 :
         disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
 
         print "---"
-        print  disp_status, "|", conf, font, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
-        print ":arrow_forward:   Brightness up   |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])+bright_step) +GAMMA +getGamma(rs)
-        print ":arrow_forward:   Brightness down |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])-bright_step) +GAMMA +getGamma(rs)
-        print ":arrow_forward:   RedShift", getStatus(not rs), "|", conf, font, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
+        print  disp_status, "|", conf, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
+        # print ":arrow_forward:   Brightness up   |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])+bright_step) +GAMMA +getGamma(rs)
+        # print ":arrow_forward:   Brightness down |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])-bright_step) +GAMMA +getGamma(rs)
+        print "  Shadow"
+        for bright_i in range( n_shadow ):
+            show_str = "level " + str( bright_i )
+            if bright_i == 0:
+                show_str = "off"
+            print "--", show_str, "|", conf, XRANDR +disp_list[i] +BRIGHT +str( 1.0 - bright_i * shadow_step ) +GAMMA +getGamma(rs)
+        print "  RedShift |", conf, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
 
 
 else :

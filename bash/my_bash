@@ -24,6 +24,7 @@ source /opt/ros/kinetic/setup.bash
 source ~/catkin_ws/devel/setup.bash
 export ROS_WORKSPACE=~/catkin_ws
 export ROS_PACKAGE_PATH=~/catkin_ws:${ROS_PACKAGE_PATH}
+export LIBGL_ALWAYS_SOFTWARE=1
 
 # for tesseract setting
 export TESSDATA_PREFIX=/home/strymj/tessdata/

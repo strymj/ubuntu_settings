@@ -4,4 +4,4 @@ alias cp='cp -i'
 
 alias sgit='git.sh'
 alias imgcnv='convert_img.sh'
-alias ckm='PASTDIR=$PWD && roscd && catkin_make && cd $PASTDIR'
+alias ckm='PASTDIR=$PWD && roscd && catkin_make;cd $PASTDIR'

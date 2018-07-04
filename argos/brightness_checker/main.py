@@ -1,32 +1,41 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-"""Process some integers.
+"""
 
-usage: main.py [-r|--redshift <on_off_toggle>] [-b|--brightness <value>] [-d|--default]
+usage:
+    main.py [-r|--redshift <value>] [-b|--brightness <value>] [-d|--default]
 
 options:
     -h --help                 show this help message and exit
     -b --brightness <value>   set brightness (0.1 ~ 1.0, "inc" or "dec")
-    -r --redshift <on_off_toggle>    redshift ("on" , "off" or "toggle")
+    -r --redshift <value>     redshift ["on" , "off" , "toggle"]
     -d --default              restore default value (brightness : 1.0, redshift : off)
+
 """
 
 import subprocess
-import re
-import sys
+import re, sys, os
 from docopt import docopt
 
-bright_step = 0.1
+# print ":bulb:"
+print ":computer:"
+if os.environ.get( "ARGOS_MENU_OPEN" ) != "true" and len( sys.argv ) == 1:
+    sys.exit(0)
+
+
 gamma_default = "1.0:1.0:1.0"
 gamma_target = "1.0:0.8:0.6"
 n_shadow = 5
-shadow_step = 0.2
+shadow_step = 0.15
+
 
 xrandr_cmd = "xrandr --verbose"
-xrandr_result = subprocess.check_output(xrandr_cmd, shell=True).split("\n")
+xrandr_result = subprocess.check_output( xrandr_cmd, shell=True ).split("\n")
 
 conf = "terminal=false refresh=true"
 font = "font=Ubuntu\ Mono trim=false"
+font = "font=Takao\ Pゴシック\ Regular trim=false"
 
 disp_list = []
 bright_list = []
@@ -62,10 +71,10 @@ def getStatus(is_redshift) :
 # with no args
 if len(sys.argv) == 1 :
 
-    if gamma_list[0] != gamma_default :
-        print ":bulb: | color=#f80"
-    else :
-        print ":bulb:"
+    # if gamma_list[0] != gamma_default :
+    #     print ":bulb: | color=#f80"
+    # else :
+    #     print ":bulb:"
 
     for i in range(len(disp_list)) :
 
@@ -73,19 +82,34 @@ if len(sys.argv) == 1 :
         if gamma_list[i] != gamma_default :
             rs = True
 
-        disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
+        # disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
+        disp_status = "<span weight='bold'>" + ":computer:   " + disp_list[i] + "</span>"
+        
+        current_bright_i = 0
+        for bright_i in range( n_shadow ):
+            if 1.0 - bright_i * shadow_step <= float( bright_list[i] ):
+                current_bright_i = bright_i
+                break
 
         print "---"
         print  disp_status, "|", conf, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
-        # print ":arrow_forward:   Brightness up   |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])+bright_step) +GAMMA +getGamma(rs)
-        # print ":arrow_forward:   Brightness down |", conf, font, XRANDR +disp_list[i] +BRIGHT +str(float(bright_list[i])-bright_step) +GAMMA +getGamma(rs)
         print "  Shadow"
+        color = ""
         for bright_i in range( n_shadow ):
             show_str = "level " + str( bright_i )
+            color = "color=#AAA"
             if bright_i == 0:
                 show_str = "off"
-            print "--", show_str, "|", conf, XRANDR +disp_list[i] +BRIGHT +str( 1.0 - bright_i * shadow_step ) +GAMMA +getGamma(rs)
-        print "  RedShift |", conf, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
+            if bright_i == current_bright_i:
+                color = "color=#FFF"
+            print "--", show_str, "|", color, conf, XRANDR +disp_list[i] +BRIGHT +str( 1.0 - bright_i * shadow_step ) +GAMMA +getGamma(rs)
+        print "  RedShift"
+        if rs:
+            print "-- off |", "color=#AAA", conf, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
+            print "-- on |" , "color=#FFF"
+        else:
+            print "-- off |", "color=#FFF"
+            print "-- on |" , "color=#AAA", conf, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
 
 
 else :
@@ -93,13 +117,14 @@ else :
     gamma_str = getGamma(gamma_list[0] != gamma_default);
 
     args = docopt(__doc__)
+    print( args )
 
     arg = args.get('--brightness')
     if len(arg) :
         if arg[0] == "inc" :
-            bright_value += bright_step
+            bright_value += shadow_step
         elif arg[0] == "dec" :
-            bright_value -= bright_step
+            bright_value -= shadow_step
         else :
             bright_value = float(arg[0])
 

@@ -24,6 +24,8 @@ if os.environ.get( "ARGOS_MENU_OPEN" ) != "true" and len( sys.argv ) == 1:
     sys.exit(0)
 
 
+conf = "terminal=false refresh=true trim=true"
+large_size = "size=11"
 gamma_default = "1.0:1.0:1.0"
 gamma_target = "1.0:0.8:0.6"
 n_shadow = 5
@@ -32,10 +34,6 @@ shadow_step = 0.15
 
 xrandr_cmd = "xrandr --verbose"
 xrandr_result = subprocess.check_output( xrandr_cmd, shell=True ).split("\n")
-
-conf = "terminal=false refresh=true"
-font = "font=Ubuntu\ Mono trim=false"
-font = "font=Takao\ Pゴシック\ Regular trim=false"
 
 disp_list = []
 bright_list = []
@@ -83,7 +81,8 @@ if len(sys.argv) == 1 :
             rs = True
 
         # disp_status = disp_list[i] +"   :bulb: " +bright_list[i] +"   :computer: " +getStatus(rs)
-        disp_status = "<span weight='bold'>" + ":computer:   " + disp_list[i] + "</span>"
+        # disp_status = "<span weight='bold'>" + ":computer:   " + disp_list[i] + "</span>"
+        disp_status = ":computer:  " + disp_list[i]
         
         current_bright_i = 0
         for bright_i in range( n_shadow ):
@@ -92,8 +91,8 @@ if len(sys.argv) == 1 :
                 break
 
         print "---"
-        print  disp_status, "|", conf, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
-        print "  Shadow"
+        print  disp_status, "|", conf, large_size, XRANDR +disp_list[i] +BRIGHT +"1.0" +GAMMA +gamma_default
+        print "Shadow"
         color = ""
         for bright_i in range( n_shadow ):
             show_str = "level " + str( bright_i )
@@ -103,7 +102,7 @@ if len(sys.argv) == 1 :
             if bright_i == current_bright_i:
                 color = "color=#FFF"
             print "--", show_str, "|", color, conf, XRANDR +disp_list[i] +BRIGHT +str( 1.0 - bright_i * shadow_step ) +GAMMA +getGamma(rs)
-        print "  RedShift"
+        print "RedShift"
         if rs:
             print "-- off |", "color=#AAA", conf, XRANDR +disp_list[i] +BRIGHT +bright_list[i] +GAMMA +getGamma(not rs)
             print "-- on |" , "color=#FFF"
